@@ -18,15 +18,17 @@ const genDiff = (filepath1, filepath2) => {
 
   const keys = _.union(keys1, keys2).sort();
   const lines = keys.map((key) => {
-    if(!Object.hasOwn(object1, key)) {
+    if (!Object.hasOwn(object1, key)) {
       return `  + ${key}: ${object2[key]}`;
-    } else if (!Object.hasOwn(object2, key)) {
-      return `  - ${key}: ${object1[key]}`;
-    } else if (object1[key] !== object2[key]) {
-      return `  - ${key}: ${object1[key]}\n  + ${key}: ${object2[key]}`;
-    } else {
-      return `    ${key}: ${object1[key]}`
     }
+    if (!Object.hasOwn(object2, key)) {
+      return `  - ${key}: ${object1[key]}`;
+    }
+    if (object1[key] !== object2[key]) {
+      return `  - ${key}: ${object1[key]}\n  + ${key}: ${object2[key]}`;
+    }
+
+    return `    ${key}: ${object1[key]}`;
   });
 
   return ['{', ...lines, '}'].join('\n');
