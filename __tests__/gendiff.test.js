@@ -18,4 +18,3 @@ test('plain object', () => {
 
   expect(actual).toEqual(expected);
 });
-
