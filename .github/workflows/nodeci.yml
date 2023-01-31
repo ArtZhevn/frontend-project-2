@@ -2,8 +2,8 @@ name: Node CI
 
 on: push
 
-env:
-  CI: true
+# env:
+#   CI: true
 
 jobs:
   build:
