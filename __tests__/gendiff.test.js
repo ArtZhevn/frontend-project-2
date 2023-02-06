@@ -1,7 +1,6 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
-
 import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +27,17 @@ test.each([
   const filepath1 = getFixturePath(testFile1);
   const filepath2 = getFixturePath(testFile2);
   const actual = genDiff(filepath1, filepath2, 'plain');
+  const expected = readFile(expectedFile);
+  expect(actual).toBe(expected);
+});
+
+test.each([
+  ['file1.json', 'file2.json', 'json.txt'],
+  ['file1.yml', 'file2.yml', 'json.txt'],
+])('format JSON', (testFile1, testFile2, expectedFile) => {
+  const filepath1 = getFixturePath(testFile1);
+  const filepath2 = getFixturePath(testFile2);
+  const actual = genDiff(filepath1, filepath2, 'json');
   const expected = readFile(expectedFile);
   expect(actual).toBe(expected);
 });
